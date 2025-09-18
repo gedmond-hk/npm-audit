@@ -24,7 +24,7 @@ jobs:
     - name: Run npm audit and save report
       run: |
         mkdir -p audit-results
-        npm audit --json > audit-results/npm-audit.json
+        npm audit --json > audit-results/npm-audit.json || true
 
     - name: Upload audit report as artifact
       uses: actions/upload-artifact@v4

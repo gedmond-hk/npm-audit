@@ -1,0 +1,33 @@
+name: NPM Audit Report
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run npm audit and save report
+      run: |
+        mkdir -p audit-results
+        npm audit --json > audit-results/npm-audit.json
+
+    - name: Upload audit report as artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: npm-audit-report
+        path: audit-results/npm-audit.json

